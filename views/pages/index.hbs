@@ -1,0 +1,32 @@
+<center><h1>Welcome to Employees Hub Website</h1></center>
+<center><h2>PLease register first to continue.....</h2></center>
+<center><h2>Check out the List of companies in EmployeesHub</h2></center>
+
+
+<table style="border:2px solid black;margin-left:auto;margin-right:auto;">
+ <thead>
+   <tr>
+     <th>Company Name</th>
+     
+   </tr>
+ </thead>
+ <tbody>
+    
+    {{#each companies}}
+    <tr>
+      
+     <td>{{this.companyName}}</td> 
+     
+    </tr>
+     {{/each}}
+ </tbody>
+</table>
+
+
+
+<!--
+
+<h1>Welcome to short URLs</h1>
+<a href="/login">Login</a>
+<a href="/register">Register</a>
+-->

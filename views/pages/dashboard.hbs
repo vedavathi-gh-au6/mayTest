@@ -1,0 +1,33 @@
+
+
+{{#if length}}
+
+<h2>Hey {{name}}. ADD YOUR COMPANY <a href='/add/company'>ADD</a></h2>
+</br>
+</br>
+<center><h4> LIST OF ALL YOUR COMPANIES</h4></center>
+
+<table style="border:1px solid black;margin-left:auto;margin-right:auto;">
+ <thead>
+   <tr>
+     <th>Company Name</th>
+     <th>Joining Date</th>
+     <th>Resigned Date</th>
+   </tr>
+ </thead>
+ <tbody>
+    
+    {{#each companies}}
+    <tr>
+      
+     <td>{{this.companyName}}</td> 
+     <td>{{this.joiningDate}}</td>
+     <td>{{this.resignedDate}}</td>
+    </tr>
+     {{/each}}
+ </tbody>
+</table>
+{{else}}
+<center><h1>Hey {{name}}. ADD YOUR PREVIOUS COMPANY <a href='/add/company'>ADD</a></h1></center>
+{{/if}}
+

@@ -1,0 +1,18 @@
+
+<div class='header'>
+  <ul>
+   
+    {{#if userCustomId}}
+    <p>{{userCustomId}}</p>
+    
+    <li>
+      <form method='POST' action='/users/logout?cadbury=DELETE'>
+        <input type="submit" value="Logout">
+      </form>
+    </li>
+    {{else}}
+    <p>{{userCustomId}}</p>
+    
+    {{/if}}
+  </ul>
+</div>
