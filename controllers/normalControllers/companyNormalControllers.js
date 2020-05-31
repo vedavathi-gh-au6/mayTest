@@ -18,7 +18,7 @@ module.exports = {
       });
   },
 
-  renderaddCompnayPage: function(req, res) {
+  renderaddCompanyPage: function(req, res) {
     res.render("addCompany", {
       userId: req.user.id,
       title: "Company create page"

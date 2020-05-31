@@ -7,7 +7,7 @@ var companyNormalControllers = require("../../controllers/normalControllers/comp
 router.get("/company", authenticate, companyNormalControllers.renderCompanyPage);
 
 // Create url page
-router.get("/add/company", authenticate, companyNormalControllers.renderaddCompnayPage);
+router.get("/add/company", authenticate, companyNormalControllers.renderaddCompanyPage);
 
 // Update url page
 //router.get("/todo/update/:todoId", authenticate, urlNormalControllers.renderUpdateTodoPage);

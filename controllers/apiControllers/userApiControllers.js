@@ -1,40 +1,72 @@
-var User = require("../../models/User");
+var uuid = require('uuid/v4');
+var bcrypt = require('bcrypt');
+var fs = require('../../utils/promisifyFS');
 
-module.exports = {
-  registerUser: function(req, res) {
-    var user = new User({ ...req.body });
-    user
-      .save()
-      .then(function(user) {
-        req.session.userId = user._id;
-        res.redirect("/company");
-      })
-      .catch(function(err) {
-        console.log(err);
-        if (err.name === "ValidationError")
-          return res.status(400).send(`Validation Error: ${err.message}`);
-      });
-  },
+var userApiController = {};
 
-  loginUser: function(req, res) {
-    // Get the users json file
+userApiController.registerUser = function (req, res) {
+    var user = {
+        id: uuid(),
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        blogs: []
+    }
+    fs.readFilePromise('./data/users.json')
+        .then(function (usersData) {
+            return JSON.parse(usersData);
+        })
+        .then(function (usersData) {
+            usersData.push(user);
+            fs.writeFilePromise('./data/users.json', JSON.stringify(usersData))
+            .then(function (resolvedValue) {
+                console.log(resolvedValue)
+                res.redirect('/login');
+            })
+            .catch(function (error) {
+                console.log(err.message);
+                res.redirect('/register');
+            })  
+        })
+        .catch(function (error) {
+            console.log(err.message);
+            res.redirect('/register');
+        })    
+}
+
+userApiController.loginUser = function (req, res) {
     var email = req.body.email;
-    var password = req.body.password;
-    if (!email || !password)
-      return res.status(400).send("Incorrect credentials");
-    User.findByEmailAndPassword(email, password)
-      .then(function(user) {
-        req.session.userId = user._id;
-        res.redirect("/company");
-      })
-      .catch(function(err) {
-        console.log(err.message);
-        res.redirect("/login");
-      });
-  },
+    var pwd = req.body.password;
+    fs.readFilePromise('./data/users.json')
+        .then(function (usersData) {
+            return JSON.parse(usersData);
+        })
+        .then(function (usersData) {
+            var user = usersData.find(function (user) {
+                return user.email === email;
+            });
+            return bcrypt.compare(pwd, user.password)
+            .then(function (result) {
+                if (result) return user;
+                return result;
+            })
+        })
+        .then(function (user) {
+            if (user) {
+                req.session.userId = user.id;
+                return res.redirect('/dashboard');
+            }
+            res.redirect('/login')
+        })
+        .catch(function (err) {
+            console.log(err.message);
+            res.redirect('/login')
+        })
+}
 
-  logOutUser: function(req, res) {
+userApiController.logoutUser = function (req, res) {
     req.session.destroy();
-    return res.redirect("/");
-  }
-};
+    res.redirect('/home');
+}
+
+module.exports = userApiController;

@@ -1,15 +1,21 @@
-var User = require("../models/User");
+var fs = require('../utils/promisifyFS');
 
-module.exports = function(req, res, next) {
-  if (req.session.userId) {
-    User.findById(req.session.userId)
-      .then(function(user) {
-        req.user = user;
-        next();
-      })
-      .catch(function(err) {
-        console.log(err.message);
-        res.redirect("/login");
-      });
-  } else res.redirect("/login");
-};
+module.exports = function (req, res, next) {
+    if (req.session.userId) {
+        fs.readFilePromise('./data/users.json')
+            .then(function (usersData) {
+                var usersArr = JSON.parse(usersData);
+                res.locals.user = usersArr.find(function (user) {
+                    return user.id === req.session.userId;
+                })
+                //console.log(res.locals.user)
+                next();
+            })
+            .catch(function (err) {
+                console.log(err.message);
+                res.redirect("/login");
+            });
+    } else {
+        res.redirect('/login');
+    }
+}

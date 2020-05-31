@@ -1,27 +1,42 @@
 
-{{#if length}}
-<h2>Hey {{name}}. Create a new url <a href='/add/company'>here</a></h2>
-<h3> List of All ShortUrls</h3>
-
-<table border="4" >
- <thead>
-   <tr>
-     <th>Company Name</th>
-     <th>Joining Date</th>
-     <th>Resigned Date</th>
-   </tr>
- </thead>
- <tbody>
-    {{#each company}}
-    <tr>
-     <td><a href={{this.companyName}}>{{this.companyName}}</a></td> 
-     <td><a href={{this.joiningDate}}>{{this.joiningDate}}</a></td>
-     <td><a href={{this.resignedDate}}>{{this.resignedDate}}</a></td>
-    </tr>
-     {{/each}}
- </tbody>
-</table>
-{{else}}
-<h1>Hey {{name}}. Create a new url <a href='/add/company'>here</a></h1>
-{{/if}}
-
+{{> header}}
+<div class="container">
+    <div class="d-flex justify-content-between mt-3 mb-3">
+        <h3>Hello {{user.name}}</h3>
+        <div class="mr-5">
+            <a href="/blog/create">Add Company</a>
+        </div> 
+    </div>
+    {{#if user.blogs}}
+    <h5>Your Companies</h5>
+    <div class="row">
+        {{#each user.blogs}}
+        <div class="col-8">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Company Name</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="{{this.title}}" disabled>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Company Description</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                    disabled>{{this.content}}</textarea>
+            </div>
+        </div>
+        <div class="col-4">
+            <div>
+                <div class="mt-5">
+                    <form action="/blog/update/{{this.id}}?_method=GET" method="POST">
+                        <button type="submit" class="btn btn-dark">Edit</button>
+                    </form>
+                </div>
+                <div class="mt-4">
+                    <form action="/blog/delete/{{this.id}}?_method=DELETE" method="POST">
+                        <button type="submit" class="btn btn-dark">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    {{/if}}
+</div>

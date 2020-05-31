@@ -1,15 +1,10 @@
-// Import the express module
-var express = require("express");
-var authenticate = require("../../middlewares/authenticate");
-var userApiControllers = require("../../controllers/apiControllers/userApiControllers");
-
-// Instance of a router is created with express.Router()
+var express = require('express');
 var router = express.Router();
+var {registerUser,loginUser,logoutUser} = require('../../controllers/apiControllers/userApiControllers');
+var {hashPassword} = require('../../middlewares/encryptPassword');
 
-router.post("/users/register", userApiControllers.registerUser);
-
-router.post("/users/login", userApiControllers.loginUser);
-
-router.delete("/users/logout", authenticate, userApiControllers.logOutUser);
+router.post('/register', hashPassword, registerUser);
+router.post('/login', loginUser);
+router.delete('/logout', logoutUser);
 
 module.exports = router;

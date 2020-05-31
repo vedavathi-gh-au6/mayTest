@@ -1,11 +1,10 @@
-var express = require("express");
+var express = require('express');
 var router = express.Router();
-var userNormalController = require("../../controllers/normalControllers/userNormalControllers");
+var { renderRegister, renderLogin, renderDashboard } = require('../../controllers/normalControllers/userNormalControllers');
+var authenticate = require('../../middlewares/authenticate');
 
-// Register page
-router.get("/register", userNormalController.renderRegisterPage);
-
-// Login page
-router.get("/login", userNormalController.renderLoginPage);
+router.get('/register', renderRegister);
+router.get('/login', renderLogin);
+router.get('/dashboard', authenticate, renderDashboard);
 
 module.exports = router;
