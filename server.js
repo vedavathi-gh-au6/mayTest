@@ -10,7 +10,7 @@ var userNormalRoutes = require('./routes/normalRoutes/userNormalRoutes');
 var blogNormalRoutes = require('./routes/normalRoutes/blogNormalRoutes');
 var userApiRoutes = require('./routes/apiRoutes/userApiRoutes');
 var blogApiRoutes = require('./routes/apiRoutes/blogApiRoutes');
-PORT=3000
+
 var app = express();
 
 //hbs
@@ -35,7 +35,7 @@ app.use(
         }
     })
 );
-
+var PORT = process.env.PORT || 8000;
 app.use(methodOverride('_method'));
 //routes
 app.use(userNormalRoutes);
