@@ -6,7 +6,8 @@ var session = require("express-session");
 require("./utils/hbs");
 require("./db");
 Company=require("./models/Company")
-
+const dotenv=require('dotenv')
+dotenv.config();
 // Routes of both API as well as normal
 var urlAPIRoutes = require("./routes/apiRoutes/companyApiRoutes");
 var userAPIRoutes = require("./routes/apiRoutes/userApiRoutes");
@@ -115,7 +116,7 @@ app.get("/company",function(req, res) {
 });
 */
 
-PORT =1111
+PORT = process.env.PORT || 1111
 app.listen(PORT, function() {
-  console.log("Server started on port '$PORT`"); 
+  console.log("Server started on port " + PORT); 
 });
