@@ -5,6 +5,7 @@ var session = require("express-session");
 var methodOverride = require("method-override");
 var fetch = require("node-fetch");
 require('./utils/hbsHelpers');
+const dotenv=require('dotenv')
 
 var userNormalRoutes = require('./routes/normalRoutes/userNormalRoutes');
 var blogNormalRoutes = require('./routes/normalRoutes/blogNormalRoutes');
@@ -35,7 +36,7 @@ app.use(
         }
     })
 );
-var PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8000;
 app.use(methodOverride('_method'));
 //routes
 app.use(userNormalRoutes);
