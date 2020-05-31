@@ -2,6 +2,7 @@ var express = require("express");
 var hbs = require("hbs");
 var path = require("path");
 var session = require("express-session");
+//var scokkie = require("express-session");
 var methodOverride = require("method-override");
 var fetch = require("node-fetch");
 require('./utils/hbsHelpers');
@@ -15,6 +16,7 @@ var blogApiRoutes = require('./routes/apiRoutes/blogApiRoutes');
 var app = express();
 
 //hbs
+app.set('trust proxy', 1);
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views", "pages"));
 app.set("view options", { layout: "../layouts/main" });
@@ -54,6 +56,12 @@ app.use('/', function (req,res) {
     })
 });
 
+app.use(function(req,res,next){
+    if(!req.session){
+        return next(new Error('Oh no')) //handle error
+    }
+    next() //otherwise continue
+    });
 
 app.listen(PORT, function () {
     console.log("Server started on port",PORT);
