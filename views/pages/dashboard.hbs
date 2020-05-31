@@ -1,0 +1,27 @@
+
+{{#if length}}
+<h2>Hey {{name}}. Create a new url <a href='/add/company'>here</a></h2>
+<h3> List of All ShortUrls</h3>
+
+<table border="4" >
+ <thead>
+   <tr>
+     <th>Company Name</th>
+     <th>Joining Date</th>
+     <th>Resigned Date</th>
+   </tr>
+ </thead>
+ <tbody>
+    {{#each company}}
+    <tr>
+     <td><a href={{this.companyName}}>{{this.companyName}}</a></td> 
+     <td><a href={{this.joiningDate}}>{{this.joiningDate}}</a></td>
+     <td><a href={{this.resignedDate}}>{{this.resignedDate}}</a></td>
+    </tr>
+     {{/each}}
+ </tbody>
+</table>
+{{else}}
+<h1>Hey {{name}}. Create a new url <a href='/add/company'>here</a></h1>
+{{/if}}
+

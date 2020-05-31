@@ -1,0 +1,6 @@
+<h1>Update ShortURLs: {{url.title}}</h1>
+<form action={{constructUpdateAPI}} method="POST">
+  <input type="text" name="longurl" value={{url.longurl}} required placeholder="longurl" />
+  <input type="text" name="count" value={{url.count}} required placeholder="url count" />
+   <input type="submit" value="Update url">
+</form>

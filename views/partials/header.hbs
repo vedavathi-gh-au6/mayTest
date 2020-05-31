@@ -1,0 +1,18 @@
+<div class='header'>
+  <ul>
+    <li><a href="/">Home</a></li>
+    {{#if userCustomId}}
+    <p>{{userCustomId}}</p>
+    <li><a href="/urls">Dashboard</a></li>
+    <li>
+      <form method='POST' action='/users/logout?cadbury=DELETE'>
+        <input type="submit" value="Logout">
+      </form>
+    </li>
+    {{else}}
+    <p>{{userCustomId}}</p>
+    <li><a href="/login">Login</a></li>
+    <li><a href="/register">Register</a></li>
+    {{/if}}
+  </ul>
+</div>
